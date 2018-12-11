@@ -1,0 +1,112 @@
+################################################
+################# Git ##########################
+############# on WSL ###########################
+################################################
+
+##### Installing Git
+sudo apt install git
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+git config --global core.autocrlf input
+
+
+
+
+##### Accessing a repo that you have permissions on
+
+### Creating a new SSH key
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+# Enter a file in which to save the key - you can use the default if you don't already have a key - don't overwrite your old one!
+# Enter a passphrase. Many people leave this blank. Obviously this is less secure.
+
+### Add your ssh key to the ssh agent
+eval $(ssh-agent -s)
+
+#If necessary, replace 'id_rsa' with your private key file.
+ssh-add ~/.ssh/id_rsa 
+
+# Copy the text from ~/.ssh/id_rsa.pub
+# Clip won't work on WSL, so you'll have to use a tool or copy it manually to the system clipboard
+# Go to your profile, click settings
+# Click SSH and GPG keyws
+# Click New SSH key or Add SSH key
+# Add a name describing which computer the key is on and what its for, paste in the key, and click add SSH key
+
+### Go to the folder you want to install your new repo folder in
+git clone git@github.com:EMSwanson/testing-and-learning.git
+
+
+
+
+###Basic Git workflows
+### When following these workflows, make sure you do the steps in order. Order matters here, and you could end up breaking things if you aren't careful.
+
+### 1. Working in a new feature branch
+git checkout -b feature_branch ### -b flag causes git checkout to create a new branch
+
+### 2. After making changes to a file
+git add *
+git commit -m "Briefly describe changes here"
+
+### 3. When you want to move committed changes to the remote feature_branch
+# Start by pulling new changes from the remote master, if there are any, to make sure your local feature branch is up to date (Workflow 4)
+# Make sure you are tracking the correct remote and the correct remote branches (Workflow 5)
+git push origin feature_branch
+# You can create pull requests (PRs) and merge when necessary/useful on Github
+
+### 4. Getting a local branch up to date 
+git checkout master ### This makes the local master branch your current active branch
+git pull origin master ### This will fetch and merge the remote master (aliased to origin) in one step
+git checkout feature_branch ### this will make a feature_branch (choose a real name) your current active branch
+git merge master ### This will merge the local master you updated from the remote master into your current active feature branch
+
+### 5. Checking your remotes and tracking
+git remote -v ### This will tell you which repo is your remote for push and fetch currently, and will give you any aliases
+git branch -vv ### Shows sha and commit subject line for your heads, along with upstream branch and name
+
+### 6. Getting a remote feature branch that is behind up to date
+git checkout master
+git pull origin master
+git checkout feature_branch
+git merge master
+git push origin feature_branch
+
+### 7. Looker's workflow (in development)
+git checkout personal_branch
+	### uh oh, personal branch is behind
+	### Need the right command for this
+git checkout master
+git pull origin master
+git checkout personal_branch
+git merge master
+	### Address any merge conflicts
+git push origin personal_branch
+
+### 8. Warnings!
+1. Do not force push. Ever.
+2. Do not rebase. Yet.
+3. Do not use flags you don't understand until you have tested them and fully understood them.
+
+### 9. Useful commmands
+git log # Gives you commit history
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+git checkout dev
+git merge master
+git push origin dev 

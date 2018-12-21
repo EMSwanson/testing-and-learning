@@ -84,9 +84,12 @@ git merge master
 git push origin personal_branch
 
 ### 8. Warnings!
-1. Do not force push. Ever.
-2. Do not rebase. Yet.
-3. Do not use flags you don't understand until you have tested them and fully understood them.
+1. Don't push to the remote master.
+2. Double-check your branches and remotes before doing anything.
+3. Anytime you push, please specify the remote alias (it will usually be origin) and the branch (whatever feature branch you are working in).
+4. Do not force push. Ever.
+5. Do not rebase. Yet.
+6. Do not use flags you don't understand until you have tested them and fully understood them.
 
 ### 9. Useful commmands
 git log # Gives you commit history
